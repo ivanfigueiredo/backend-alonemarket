@@ -1,2 +1,1 @@
-web: npm start
-e
+web: npm run startdev

@@ -22,8 +22,6 @@ router.get('/ping', (req, res)=>{
     res.json({pong: true});
 }); 
 
-router.post('/app/signin', AuthValidator.signinApp, AuthController.signinApp);
-
 router.post('/user/signin', AuthValidator.signin, AuthController.signin);
 router.post('/user/signup',AuthValidator.signup, Auth.private, AuthController.signup);
 
