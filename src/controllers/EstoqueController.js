@@ -67,6 +67,30 @@ module.exports = {
 
         res.json({listaEstoque});
     },
+	
+    listarEstolMobile: async (req, res) => {
+        let produto = await Produto.find({status: "Ativo"});
+        let estoque = await Estoque.find();
+
+        let listaEstoque = [];
+
+        for(let j in estoque){
+            for(let i in produto){
+                if(String(estoque[j].idProduto) == produto[i]._id){
+                    listaEstoque.push({
+                        
+                        codigoDeBarras: produto[i].codigoDeBarras,
+                        name: produto[i].name,
+                        preco: produto[i].valorVenda,
+                        qtd: estoque[j].qtd,                                                
+                        dataValidade: estoque[j].dataValidade,                                                                        
+                        _id: estoque[j]._id
+                    });
+                }
+            }
+        }
+        res.json(listaEstoque);
+    },
 
     estokUpdate: async (req, res) => {
         const errors = validationResult(req);
