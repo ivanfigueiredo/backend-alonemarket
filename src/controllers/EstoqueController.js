@@ -65,7 +65,7 @@ module.exports = {
             }
         }
 
-        res.json(listaEstoque);
+        res.json({listaEstoque});
     },
 
     estokUpdate: async (req, res) => {
