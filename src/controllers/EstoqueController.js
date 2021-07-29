@@ -65,7 +65,7 @@ module.exports = {
             }
         }
 
-        res.json({listaEstoque});
+        res.json({name: this.listarEstoque.name, qtd: listarEstoque.qtd, preco: listarEstoque.valorVenda, validade: listarEstoque.dataValidade});
     },
 
     estokUpdate: async (req, res) => {
