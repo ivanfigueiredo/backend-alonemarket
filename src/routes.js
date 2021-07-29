@@ -48,6 +48,7 @@ router.put('/produto/status', ProdutoValidator.status, ProdutoController.status)
 
 router.post('/estoque/add',EstoqueValidator.addEstoque, EstoqueController.addEstoque);
 router.get('/estoque/lista', EstoqueController.listarEstoque);
+router.get('/estoqueweb/lista', EstoqueController.listarEstolMobile);
 router.put('/estoque/update', EstoqueValidator.estokUpdate, EstoqueController.estokUpdate); 
 
 
