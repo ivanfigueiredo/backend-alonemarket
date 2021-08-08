@@ -37,16 +37,17 @@ router.post('/fornecedor/add', FornecedorValidator.addFornecedor, Auth.private, 
 router.get('/fornecedor/list',FornecedorValidator.listarFornecedor, FornecedorController.listFornecedores);
 router.get('/fornecedor/listarTodos', FornecedorController.listarTodosFornecedores);
 router.put('/fornecedor/update', FornecedorValidator.updateFornecedor, Auth.private, FornecedorController.editAction);
-router.put('/fornecedor/status', FornecedorValidator.status, Auth.private, FornecedorController.status)
+router.put('/fornecedor/status', FornecedorValidator.status, Auth.private, FornecedorController.status);
+
 
 router.post('/produto/add', ProdutoValidator.addAction, Auth.private, ProdutoController.addAction);
 router.get('/produto/list', ProdutoController.getList);
-router.get('/produto/item', ProdutoValidator.getItem, ProdutoController.getItem);
 router.put('/produto/update', ProdutoValidator.editAction, ProdutoController.editAction);
 router.put('/produto/status', ProdutoValidator.status, ProdutoController.status);
 
 
 router.post('/estoque/add',EstoqueValidator.addEstoque, EstoqueController.addEstoque);
+router.get('/estoque/estoqueItem', EstoqueValidator.getItemEstoque, EstoqueController.getItemEstoque);
 router.get('/estoque/lista', EstoqueController.listarEstoque);
 router.get('/estoqueweb/lista', EstoqueController.listarEstolMobile);
 router.put('/estoque/update', EstoqueValidator.estokUpdate, EstoqueController.estokUpdate); 
