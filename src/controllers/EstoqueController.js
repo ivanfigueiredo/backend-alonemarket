@@ -47,10 +47,10 @@ module.exports = {
                         
                         codigoDeBarras: produto[i].codigoDeBarras,
                         name: produto[i].name,
-                        preco: produto[i].preco,
+                        preco: produto[i].valorVenda,
                         qtd: estoque[j].qtd,
                         qtdMinima: estoque[j].qtdMinima,
-                        valorEstoque: (parseFloat(produto[i].preco) * estoque[j].qtd).toFixed(2),
+                        valorEstoque: (parseFloat(produto[i].valorVenda) * estoque[j].qtd).toFixed(2),
                         dataValidade: estoque[j].dataValidade,
                         dataCadastro: produto[i].dataCadastro,
                         unidadeDeMedida: produto[i].unidadeDeMedida,
@@ -67,7 +67,7 @@ module.exports = {
 
         res.json({listaEstoque});
     },
-	
+
     listarEstolMobile: async (req, res) => {
         let produto = await Produto.find({status: "Ativo"});
         let estoque = await Estoque.find();
@@ -121,5 +121,35 @@ module.exports = {
         await Estoque.findOneAndUpdate({_id: data._id}, {$set: updates});
 
         res.json({});
-    }
+    },
+
+    getItemEstoque: async (req, res) =>{
+        const errors = validationResult(req);
+        if(!errors.isEmpty()){
+            res.json({error: errors.mapped()});
+            return;
+        }
+
+        const data = matchedData(req);
+
+        let prodCheck = await Produto.findOne({codigoDeBarras: data.codigoDeBarras});
+        if(!prodCheck){
+            res.json({error: 'Código inválido!'});
+            return;
+        }
+        let stokCheck = await Estoque.find({idProduto: prodCheck._id});
+        
+        let itemStok = {};
+        for(let j in stokCheck){
+            if(stokCheck[j].dataValidade == data.dataValidade){
+                itemStok = {codigoDeBarras: prodCheck.codigoDeBarras,
+                                name: prodCheck.name,                                
+                                valorVenda: prodCheck.valorVenda,
+                                pesoVolume: prodCheck.pesoVolume,
+                                unidadeDeMedida: prodCheck.unidadeDeMedida}                                
+            }
+        }
+         
+        res.json({itemStok});
+    },
 };

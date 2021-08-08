@@ -87,11 +87,5 @@ module.exports = {
              notEmpty: true,
              errorMessage: 'Informe o status do produto'
          }
-    }),
-    getItem:checkSchema({
-        codigoDeBarras:{
-            notEmpty: true,
-            errorMessage: 'Informe o código de barras!'
-         }
     })
 };

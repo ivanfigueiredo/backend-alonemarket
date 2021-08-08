@@ -34,5 +34,15 @@ module.exports = {
         novaQtdMinima: {
             optional: true
         }
+    }),
+    getItemEstoque:checkSchema({
+        codigoDeBarras:{
+            notEmpty: true,
+            errorMessage: 'Informe o código de barras!'
+         },
+         dataValidade: {
+             notEmpty: true,
+             errorMessage: 'Informe uma data de validade válida!'
+         }
     })
 };

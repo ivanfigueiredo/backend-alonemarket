@@ -48,27 +48,7 @@ module.exports = {
 
 
         res.json({produtos});
-    },
-    getItem: async (req, res) =>{
-        const errors = validationResult(req);
-        if(!errors.isEmpty()){
-            res.json({error: errors.mapped()});
-            return;
-        }
-
-        const data = matchedData(req);
-
-        let produto = await Produto.findOne({codigoDeBarras: data.codigoDeBarras});
-        if(!produto){
-            res.json({error: 'Código inválido!'});
-        }else{
-            res.json({codigoDeBarras: produto.codigoDeBarras,
-                    name: produto.name,
-                    preco: produto.preco,
-                    pesoVolume: produto.pesoVolume,
-                    unidadeDeMedida: produto.unidadeDeMedida});
-        }
-    },
+    },    
 
     editAction: async (req, res) => {
         const errors = validationResult(req);
