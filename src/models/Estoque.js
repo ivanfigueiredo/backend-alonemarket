@@ -5,6 +5,7 @@ const modelSchema = new mongoose.Schema({
     idProduto: String,
     qtd: Number,
     qtdMinima: Number,
+    vencido: Boolean,
     dataValidade: String,
 });
 

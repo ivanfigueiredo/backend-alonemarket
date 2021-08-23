@@ -18,6 +18,10 @@ module.exports = {
         dataValidade: {
             notEmpty: true,
             errorMessage: 'Informe a data de validade'
+        },
+        vencido: {
+            notEmpty: true,
+            errorMessage: 'Informe o status de validade'
         }
     }),
     estokUpdate: checkSchema({
@@ -44,5 +48,16 @@ module.exports = {
              notEmpty: true,
              errorMessage: 'Informe uma data de validade válida!'
          }
+    }),
+    altProdVencido:checkSchema({
+        _id: {
+            optional: true            
+        },
+        vencido:{
+            optional: true            
+        },
+        identificador:{
+            notEmpty: true
+        }
     })
 };

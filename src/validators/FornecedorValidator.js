@@ -7,29 +7,27 @@ module.exports = {
             notEmpty: true,
             errorMessage: 'Informe o nome do fornecedor!'
         },
-        cnpj: {
-            isLength: 18,
-            errorMessage: 'CNPJ inválido!'
+        cnpj: {  
+            optional: true,                                                               
         },
         cpf: {
-            isLength: 14,
-            errorMessage: 'CPF inválido!'
+            optional: true,            
         },
         tipo: {
             notEmpty: true,
             errorMessage: 'Informe o tipo de fornecedor!'
         },
         telefone: {
-            notEmpty: true,
-            errorMessage: 'Telefone inválido!!'
+            notEmpty: true,            
+            errorMessage: 'Informe um telefone válido!'
         },
         bairro: {
             notEmpty: true,
             errorMessage: 'Informe o Bairro do fornecedor!'
         },
         cep: {
-            isLength: 9,
-            errorMessage: 'CEP Inválido!'
+            notEmpty: true,            
+            errorMessage: 'Informe um CEP válido!'
         },
         status: {
             notEmpty: true,

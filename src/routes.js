@@ -42,15 +42,16 @@ router.put('/fornecedor/status', FornecedorValidator.status, Auth.private, Forne
 
 router.post('/produto/add', ProdutoValidator.addAction, Auth.private, ProdutoController.addAction);
 router.get('/produto/list', ProdutoController.getList);
-router.put('/produto/update', ProdutoValidator.editAction, ProdutoController.editAction);
-router.put('/produto/status', ProdutoValidator.status, ProdutoController.status);
+router.put('/produto/update', ProdutoValidator.editAction, Auth.private, ProdutoController.editAction);
+router.put('/produto/status', ProdutoValidator.status, Auth.private, ProdutoController.status);
 
 
-router.post('/estoque/add',EstoqueValidator.addEstoque, EstoqueController.addEstoque);
+router.post('/estoque/add',EstoqueValidator.addEstoque, Auth.private, EstoqueController.addEstoque);
 router.get('/estoque/estoqueItem', EstoqueValidator.getItemEstoque, EstoqueController.getItemEstoque);
 router.get('/estoque/lista', EstoqueController.listarEstoque);
 router.get('/estoqueweb/lista', EstoqueController.listarEstolMobile);
-router.put('/estoque/update', EstoqueValidator.estokUpdate, EstoqueController.estokUpdate); 
+router.put('/estoque/update', EstoqueValidator.estokUpdate, Auth.private, EstoqueController.estokUpdate); 
+router.put('/estoque/altProdVencido', EstoqueValidator.altProdVencido, Auth.private, EstoqueController.altProdVencido);
 
 
 module.exports = router;
