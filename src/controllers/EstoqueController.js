@@ -23,7 +23,7 @@ module.exports = {
         const newEstoque = new Estoque({
             idProduto: produto._id,
             qtd: data.qtd,
-            vencido: data.vencido,
+            vencido: false,
             qtdMinima: data.qtdMinima,
             dataValidade: data.dataValidade
         });
