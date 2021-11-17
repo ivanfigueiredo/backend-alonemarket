@@ -18,10 +18,6 @@ module.exports = {
         dataValidade: {
             notEmpty: true,
             errorMessage: 'Informe a data de validade'
-        },
-        vencido: {
-            notEmpty: true,
-            errorMessage: 'Informe o status de validade'
         }
     }),
     estokUpdate: checkSchema({
