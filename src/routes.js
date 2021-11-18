@@ -19,7 +19,7 @@ const FornecedorController = require('./controllers/FornecedorController');
 
 
 router.post('/user/signin', AuthValidator.signin, AuthController.signin);
-router.post('/user/signup',AuthValidator.signup, Auth.private, AuthController.signup);
+router.post('/user/signup',AuthValidator.signup, AuthController.signup);
 router.put('/user/status', UserValidator.statusUpdate, Auth.private, UserController.status);
 router.put('/user/me', UserValidator.editAction, Auth.private, UserController.editAction);
 router.get('/user/me', UserController.info);

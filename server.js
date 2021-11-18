@@ -1,8 +1,9 @@
-require('dotenv').config();
+require('dotenv').config({
+    path: process.env.NODE_ENV == "production" ? ".env" : ".env.test"
+});
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-
 
 const apiRoutes = require('./src/routes');
 
@@ -11,6 +12,7 @@ mongoose.connect(process.env.DATABASE,{
     useFindAndModify: false,
     useUnifiedTopology: true
 });
+
 mongoose.Promise = global.Promise;
 mongoose.connection.on('error', (error) => {
     console.error("Erro: ", error.message);
@@ -23,10 +25,6 @@ server.use(express.json());
 server.use(express.urlencoded({extended: true}));
 
 
-server.use(express.static(__dirname+'public'));
-
 server.use('/', apiRoutes);
 
-server.listen(process.env.PORT, () =>{
-    console.log(` Rodadndo no endereço: ${process.env.DATABASE}`);
-});
+module.exports = server;
