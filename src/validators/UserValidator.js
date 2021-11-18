@@ -21,15 +21,6 @@ module.exports = {
             optional: true
         }
     }),
-    remove:checkSchema({
-        token: {
-            notEmpty: true
-        },
-        name: {
-            notEmpty: true,
-            errorMessage: 'Vodê deve digitar o nome do usuário!'
-        }
-    }),
     statusUpdate:checkSchema({
         _id: {
             notEmpty: true,

@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const { validationResult, matchedData } = require('express-validator');
+const mongoose = require('mongoose');
 
 const User = require('../models/User');
 
@@ -24,8 +25,12 @@ module.exports = {
     },
     info: async (req, res) => {
         let token = await req.query.token;
-
+        
         const user = await User.findOne({token});
+        if(!user){            
+            res.json({error: 'Token Invalido!'});
+            return;
+        }                
         res.json({token: user.token, name: user.name, eAdmin: user.eAdmin});
     },
     editAction: async (req, res) => {
@@ -39,49 +44,28 @@ module.exports = {
 
         let updates = {};
 
-        if(data.name){
-            const nameCheck = await User.findOne({name: data.name});
+        if(req.body.name){
+            const nameCheck = await User.findOne({name: req.body.name});
             if(!nameCheck){
                 res.json({error: 'Usuário não existe!'});
                 return;
             }
-            if(data.novoName){
-                updates.name = data.novoName;
-            }
-            
-            
+            if(req.body.novoName){
+                updates.name = req.body.novoName;
+            }                        
         }
 
-        if(data.password){
-            updates.passwordHash = await bcrypt.hash(data.password, 10);
+        if(req.body.password){
+            updates.passwordHash = await bcrypt.hash(req.body.password, 10);
         }
         
-        if(data.status){
-            updates.status = await data.status;
+        if(req.body.status){
+            updates.status = await req.body.status;
         }
         
-        await User.findOneAndUpdate({name: data.name}, {$set: updates});
+        await User.findOneAndUpdate({name: req.body.name}, {$set: updates});
 
-        res.json({});
-    },
-    remove: async (req, res) => {
-        const errors = validationResult(req);
-        if(!errors.isEmpty()){
-            res.json({error: errors.mapped()});
-            return;
-        }
-
-        const data = matchedData(req);
-
-        if(data.name){
-            const nameCheck = await User.findOne({name: data.name});
-            if(!nameCheck){
-                res.json({error: 'Usuário não existe!'});
-                return;
-            }
-            await User.remove({name: data.name});
-        }
-        res.json({});
+        res.json({http: 200});
     },
     status: async (req, res) => {
         const errors = validationResult(req);
@@ -92,10 +76,16 @@ module.exports = {
 
         const data = matchedData(req);
         let updates = {};
-       
-        updates.status = data.status;
+
+        if(!mongoose.Types.ObjectId.isValid(req.body._id)){            
+            res.json({error: 'ID Invalido!'});
+            return;
+        }
+        if(req.body.status){
+            updates.status = req.body.status;
+        }                                        
         
-        await User.findOneAndUpdate({_id: data._id}, {$set: updates});
-        res.json({status: data.status});
+        await User.findOneAndUpdate({_id: req.body._id}, {$set: updates});
+        res.json({status: req.body.status});
     }
 };

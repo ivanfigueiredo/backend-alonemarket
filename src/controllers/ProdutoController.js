@@ -5,9 +5,6 @@ const Produto = require('../models/Produto');
 const moment = require('moment');
 
 module.exports = {
-    getProduto: async (req, res) => {
-
-    },
     getMedidas: async (req, res) => {
         let medidas = await Medidas.find();
         
@@ -22,26 +19,27 @@ module.exports = {
 
         const data = matchedData(req);
 
-        let prodCheck = await Produto.findOne({codigoDeBarras: data.codigoDeBarras});
+        let prodCheck = await Produto.findOne({codigoDeBarras: req.body.codigoDeBarras});
 
         if(prodCheck){
             res.json({error: 'Produto já cadastrado!'});
+            return;
         } else{
             const newProduto = new Produto({
-                codigoDeBarras: data.codigoDeBarras,
-                name: data.name,
-                preco: data.preco,
-                valorVenda: data.valorVenda,
-                status: data.status,
+                codigoDeBarras: req.body.codigoDeBarras,
+                name: req.body.name,
+                preco: req.body.preco,
+                valorVenda: req.body.valorVenda,
+                status: req.body.status,
                 dataCadastro: moment().format("DD/MM/YYYY"),
-                unidadeDeMedida: data.unidadeDeMedida,
-                pesoVolume: data.pesoVolume,
-                fabricante: data.fabricante,
-                fornecedor: data.fornecedor
+                unidadeDeMedida: req.body.unidadeDeMedida,
+                pesoVolume: req.body.pesoVolume,
+                fabricante: req.body.fabricante,
+                fornecedor: req.body.fornecedor
             });
             await newProduto.save();
         }
-        res.json({});
+        res.json({http: 200});
     },
     getList: async (req, res) => {
         let produtos = await Produto.find();
@@ -61,47 +59,47 @@ module.exports = {
 
         let updates = {};
 
-        if(data.name){    
-            updates.name = data.name;
+        if(req.body.name){    
+            updates.name = req.body.name;
         }
 
-        if(data.preco){
-            updates.preco = data.preco;
+        if(req.body.preco){
+            updates.preco = req.body.preco;
         }
 
-        if(data.valorVenda){
-            updates.valorVenda = data.valorVenda;
+        if(req.body.valorVenda){
+            updates.valorVenda = req.body.valorVenda;
         }
         
-        if(data.qtd){
-            updates.qtd = data.qtd;
+        if(req.body.qtd){
+            updates.qtd = req.body.qtd;
         }
 
-        if(data.dataValidade){
-            updates.dataValidade = data.dataValidade;
+        if(req.body.dataValidade){
+            updates.dataValidade = req.body.dataValidade;
         }
 
-        if(data.unidadeDeMedida){
-            updates.unidadeDeMedida = data.unidadeDeMedida;
+        if(req.body.unidadeDeMedida){
+            updates.unidadeDeMedida = req.body.unidadeDeMedida;
         }
 
-        if(data.pesoVolume){
-            updates.pesoVolume = data.pesoVolume;
+        if(req.body.pesoVolume){
+            updates.pesoVolume = req.body.pesoVolume;
         }
 
-        if(data.fabricante){
-            updates.fabricante = data.fabricante;
+        if(req.body.fabricante){
+            updates.fabricante = req.body.fabricante;
         }
 
-        if(data.fornecedor){
-            updates.fornecedor = data.fornecedor;
+        if(req.body.fornecedor){
+            updates.fornecedor = req.body.fornecedor;
         }
 
         updates.dataCadastro = moment().format("DD/MM/YYYY");
         
-        await Produto.findOneAndUpdate({codigoDeBarras: data.codigoDeBarras}, {$set: updates});
+        await Produto.findOneAndUpdate({codigoDeBarras: req.body.codigoDeBarras}, {$set: updates});
 
-        res.json({});
+        res.json({http: 200});
     },
     status: async (req, res) => {
         const errors = validationResult(req);
@@ -113,9 +111,9 @@ module.exports = {
         const data = matchedData(req);
         let updates = {};
        
-        updates.status = data.status;
+        updates.status = req.body.status;
         
-        await Produto.findOneAndUpdate({codigoDeBarras: data.codigoDeBarras}, {$set: updates});
-        res.json({status: data.status});
+        await Produto.findOneAndUpdate({codigoDeBarras: req.body.codigoDeBarras}, {$set: updates});
+        res.json({status: req.body.status});
     }
 };
