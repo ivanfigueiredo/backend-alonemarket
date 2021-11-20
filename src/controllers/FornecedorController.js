@@ -76,7 +76,8 @@ module.exports = {
         if(data.cnpj){
             if(String(checkFornecedor.cpf) !== ''){
                 updates.cnpj = data.cnpj;
-                updates.cpf = '';                          
+                updates.cpf = '';   
+                updates.tipo = data.tipo;
             }
             updates.cnpj = data.cnpj;
         }
@@ -85,7 +86,7 @@ module.exports = {
             if(String(checkFornecedor.cnpj) !== ''){
                 updates.cpf = data.cpf;
                 updates.cnpj = '';
-                
+                updates.tipo = data.tipo;
             }
             updates.cpf = data.cpf;
         }
@@ -105,11 +106,6 @@ module.exports = {
         if(data.cep){
             updates.cep = data.cep;
         }
-
-        if(data.tipo){
-            updates.tipo = data.tipo;
-        }
-
         
         await Fornecedor.findOneAndUpdate({_id: data._id}, {$set: updates});
 
