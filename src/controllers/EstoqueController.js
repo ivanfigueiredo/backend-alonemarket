@@ -72,7 +72,7 @@ module.exports = {
 
     listarEstolMobile: async (req, res) => {
         let produto = await Produto.find({status: "Ativo"});
-        let estoque = await Estoque.find({vencido: false});
+        let estoque = await Estoque.find({!vencido});
 
         let listaEstoque = [];
 
